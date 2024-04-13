@@ -4,7 +4,7 @@ export interface ListItem {
   path: string
 }
 
-export const transferObjToList = (obj: Record<string, any>, prefix = ''): ListItem[] => {
+const transferObjToList = (obj: Record<string, any>, prefix = ''): ListItem[] => {
   const list: ListItem[] = []
   for (const key in obj) {
     const value = obj[key]
@@ -32,3 +32,5 @@ export const transferObjToList = (obj: Record<string, any>, prefix = ''): ListIt
   }
   return list
 }
+
+export default transferObjToList

@@ -1,4 +1,4 @@
-export const getValueByPath = (obj: Record<string, any>, path: string) => {
+const getValueByPath = (obj: Record<string, any>, path: string) => {
   const keys = path.split('.')
   let value = obj
   for (const key of keys) {
@@ -9,3 +9,5 @@ export const getValueByPath = (obj: Record<string, any>, path: string) => {
   }
   return value
 }
+
+export default getValueByPath

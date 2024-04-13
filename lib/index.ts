@@ -1,5 +1,6 @@
 import yaml from "js-yaml";
-import { ListItem, replaceVariables, transferObjToList } from "./utils/common";
+import { replaceVariables, transferObjToList } from "./utils/common";
+import { ListItem } from "./utils/common/transferObjToList";
 
 export class Executor {
   bql = "";

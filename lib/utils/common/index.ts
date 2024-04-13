@@ -1,3 +1,5 @@
-export * from './getValueByPath'
-export * from './replaceVariables'
-export * from './transferObjToList'
+import getValueByPath from './getValueByPath'
+import replaceVariables from './replaceVariables'
+import transferObjToList from './transferObjToList'
+
+export { getValueByPath, replaceVariables, transferObjToList }
