@@ -1,5 +1,6 @@
-import getValueByPath from './getValueByPath'
-import replaceVariables from './replaceVariables'
-import transferObjToList from './transferObjToList'
+import getValueByPath from "./getValueByPath.js";
+import replaceVariables from "./replaceVariables.js";
+import transferObjToList from "./transferObjToList.js";
+import functionParser from "./functionParser.js";
 
-export { getValueByPath, replaceVariables, transferObjToList }
+export { getValueByPath, replaceVariables, transferObjToList, functionParser };

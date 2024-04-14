@@ -1,7 +1,10 @@
 import yaml from "js-yaml";
-import { replaceVariables, transferObjToList } from "./utils/common";
-import { ListItem } from "./utils/common/transferObjToList";
-
+import {
+  replaceVariables,
+  transferObjToList,
+  functionParser,
+} from "./utils/common";
+import { ListItem } from "./utils/common/transferObjToList.js";
 export class Executor {
   bql = "";
   context: Record<string, any> = {};
@@ -16,10 +19,14 @@ export class Executor {
       return;
     }
     const { key, value, path } = this.executeList[step];
-
-    // The first step is variable substitution
+    // replace variables
     if (typeof value === "string" && value.startsWith("$")) {
       replaceVariables(key, value, path, this.context);
+    }
+
+    // function parsing
+    if (typeof key === "string" && key.startsWith("_")) {
+      functionParser(key, path, this.context);
     }
 
     if (continuousExecution) {

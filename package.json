@@ -1,6 +1,6 @@
 {
   "name": "bql-executor",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Blockchain Quest Language Executor",
   "main": "build/index.js",
   "type": "module",
@@ -23,6 +23,7 @@
     "typescript": "^5.4.4"
   },
   "dependencies": {
+    "bignumber.js": "^9.1.2",
     "js-yaml": "^4.1.0"
   }
 }

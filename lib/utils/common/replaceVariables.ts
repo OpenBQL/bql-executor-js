@@ -1,14 +1,21 @@
-import getValueByPath from './getValueByPath'
+import getValueByPath from "./getValueByPath.js";
 
-const replaceVariables = (key: string | number, value: string, path: string, context: Record<string, any>) => {
-  const variableName = value.slice(1)
-  const result = variableName.includes('.') ? getValueByPath(context, variableName) : context[variableName]
+const replaceVariables = (
+  key: string | number,
+  value: string,
+  path: string,
+  context: Record<string, any>
+) => {
+  const variableName = value.slice(1);
+  const result = variableName.includes(".")
+    ? getValueByPath(context, variableName)
+    : context[variableName];
   if (result) {
-    const pathValue = getValueByPath(context, path)
+    const pathValue = getValueByPath(context, path);
     if (pathValue) {
-      pathValue[key] = result
+      pathValue[key] = result;
     }
   }
-}
+};
 
-export default replaceVariables
+export default replaceVariables;
