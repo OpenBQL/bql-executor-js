@@ -1,8 +1,8 @@
-import { BigNumber } from 'bignumber.js'
+import { BigNumber } from "bignumber.js";
 
-const add = (var1: number, var2: number) => {
-  const result = new BigNumber(var1).plus(var2).toString()
-  return result
-}
+const add = (var1: number | string, var2: number | string) => {
+  const result = new BigNumber(var1).plus(var2).toString();
+  return result;
+};
 
-export default add
+export default add;
