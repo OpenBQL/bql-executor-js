@@ -26,11 +26,9 @@ const interactContractEvm = async (
       const hasValue =
         action.value && !isNaN(action.value) && action.value !== "0";
       if (action.params) {
-        console.log(ERC20);
-
         const hasSameNameFunc =
-          ERC20.find((item) => item.name === action.call) !== undefined;
-        console.log(ERC20.find((item) => item.name === action.call));
+          ERC20.filter((item) => item.name === action.call).length > 1;
+
         const funcName = hasSameNameFunc
           ? `${action.call}(${Object.keys(action.params).join(",")})`
           : action.call;
