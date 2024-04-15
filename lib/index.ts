@@ -5,6 +5,7 @@ import {
   functionParser,
 } from "./utils/common";
 import { ListItem } from "./utils/common/transferObjToList.js";
+import { interactContractEvm } from "./utils/interactContract";
 export class Executor {
   bql = "";
   context: Record<string, any> = {};
@@ -34,6 +35,10 @@ export class Executor {
     }
 
     if (key === "action") {
+      if (this.context.network === "solana") {
+      } else {
+        interactContractEvm(key, path, this.context, this.provider);
+      }
     }
 
     if (continuousExecution) {
