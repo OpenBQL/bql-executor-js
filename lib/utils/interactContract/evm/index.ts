@@ -41,6 +41,7 @@ const interactContractEvm = async (
             { value: action.value }
           ).call();
         } else {
+          console.log(...Object.values(action.params));
           res = await contractObj?.methods?.[action.call]?.(
             ...Object.values(action.params)
           ).call();
