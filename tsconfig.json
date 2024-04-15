@@ -3,6 +3,7 @@
     "target": "ES5",
     "module": "ES6",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "declaration": true,
     "outDir": "./build",
     "strict": true,
