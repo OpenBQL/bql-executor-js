@@ -26,16 +26,17 @@ const interactContractEvm = async (
       const hasValue =
         action.value && !isNaN(action.value) && action.value !== "0";
       if (action.params) {
+        console.log(ERC20);
+
         const hasSameNameFunc =
           ERC20.find((item) => item.name === action.call) !== undefined;
+        console.log(ERC20.find((item) => item.name === action.call));
         const funcName = hasSameNameFunc
           ? `${action.call}(${Object.keys(action.params).join(",")})`
           : action.call;
         const params = [...Object.values(action.params)];
         if (hasValue) params.push({ value: action.value });
-        console.log("xxxx");
-        console.log(funcName);
-        console.log(...params);
+
         res = await contractObj?.[funcName]?.(...params);
       } else {
         const params = [];
