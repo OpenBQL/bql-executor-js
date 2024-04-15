@@ -14,7 +14,7 @@
     "url": "git+https://github.com/OpenBQL/bql-executor-js.git"
   },
   "author": "Hardy",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/OpenBQL/bql-executor-js/issues"
   },
