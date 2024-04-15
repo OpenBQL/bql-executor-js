@@ -1,6 +1,6 @@
 import { getValueByPath } from "../../common";
 import Web3 from "web3";
-const ERC20 = require("../../../abis/erc20.json");
+import ERC20 from "../../../abis/erc20.json";
 
 const interactContractEvm = async (
   key: string,
@@ -30,7 +30,10 @@ const interactContractEvm = async (
     } else {
       let res;
       console.log(ERC20);
-      const contractObj = await new web3.eth.Contract(ERC20, action.contract);
+      const contractObj = await new web3.eth.Contract(
+        ERC20 as any,
+        action.contract
+      );
       if (action.params) {
         if (action.value && !isNaN(action.value) && action.value !== "0") {
           res = await contractObj?.methods?.[action.call]?.(
