@@ -11,11 +11,13 @@ export class Executor {
   context: Record<string, any> = {};
   executeList: ListItem[] = [];
   provider: any = null;
+  account: string = "";
   solanaRpc: string = "";
-  constructor(bql: string, provider: any, solanaRpc?: string) {
+  constructor(bql: string, provider: any, account: string, solanaRpc?: string) {
     this.bql = bql;
     this.context = yaml.load(bql);
     this.provider = provider;
+    this.account = account;
     this.solanaRpc = solanaRpc || "";
     this.executeList = transferObjToList(this.context);
   }
