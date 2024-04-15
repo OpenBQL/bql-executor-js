@@ -12,8 +12,16 @@ const interactContractEvm = async (
     const action = pathValue[key];
     if (action.protocol === "NativeToken") {
       const web3 = new Web3(provider);
-      const receipt = await web3.eth.sendTransaction(action.params);
-      console.log(receipt);
+      const receipt = web3.eth
+        .sendTransaction(action.params)
+        .on("transactionHash", function (hash) {
+          console.log("Transaction Hash:", hash);
+        })
+        .on("receipt", function (receipt) {
+          console.log("Transaction Receipt:", receipt);
+        })
+        .on("error", console.error);
+      console.log("xxx");
     }
   }
 };
