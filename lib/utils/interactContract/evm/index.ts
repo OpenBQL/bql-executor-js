@@ -22,7 +22,7 @@ const interactContractEvm = async (
       res = await signer?.["sendTransaction"]?.(action.params);
     } else {
       // contract call
-      const contractObj = await new Contract(action.contract, ERC20, signer);
+      const contractObj = new Contract(action.contract, ERC20, signer);
       const hasValue =
         action.value && !isNaN(action.value) && action.value !== "0";
       if (action.params) {
@@ -33,6 +33,9 @@ const interactContractEvm = async (
           : action.call;
         const params = [...Object.values(action.params)];
         if (hasValue) params.push({ value: action.value });
+        console.log("xxxx");
+        console.log(funcName);
+        console.log(...params);
         res = await contractObj?.[funcName]?.(...params);
       } else {
         const params = [];
