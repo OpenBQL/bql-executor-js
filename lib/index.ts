@@ -39,7 +39,13 @@ export class Executor {
     if (key === "action") {
       if (this.context.network === "solana") {
       } else {
-        interactContractEvm(key, path, this.context, this.provider);
+        interactContractEvm(
+          key,
+          path,
+          this.context,
+          this.provider,
+          this.account
+        );
       }
     }
 
