@@ -14,7 +14,7 @@ import {
   getAssociatedTokenAddressSync,
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
-import * as anchor from "@project-serum/anchor";
+import * as anchor from "@project-serum/anchor/dist/cjs/index.js";
 import { isNormalObject } from "../../common/isNormalObject.js";
 import { getValueByPath } from "../../common";
 
