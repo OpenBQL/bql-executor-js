@@ -13,7 +13,7 @@ const replaceVariables = (
   if (result) {
     const pathValue = getValueByPath(context, path);
     if (pathValue) {
-      pathValue[key] = result;
+      pathValue[key] = typeof result === "function" ? result?.() : result;
     }
   }
 };

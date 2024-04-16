@@ -17,13 +17,16 @@ import {
 import * as anchor from "@project-serum/anchor";
 import { isNormalObject } from "../../common/isNormalObject.js";
 import { getValueByPath } from "../../common";
+import { logItem } from "../../../index.js";
+import { getUuid } from "../../common/getUuid.js";
 
 const interactContractSolana = async (
   key: string,
   path: string,
   context: Record<string, any>,
   provider: any,
-  solanaRpc: string
+  solanaRpc: string,
+  logs: logItem[]
 ) => {
   const pathValue = getValueByPath(context, path);
   if (pathValue) {
@@ -191,7 +194,13 @@ const interactContractSolana = async (
     await connection.confirmTransaction(res, "finalized");
     action.txid = res;
     action.status = "completed";
-    console.log(action);
+    logs.push({
+      type: "action",
+      timeStamp: Date.now(),
+      runId: getUuid(),
+      code: action,
+      message: JSON.stringify(action, null, 2),
+    });
   }
 };
 

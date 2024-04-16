@@ -3,13 +3,16 @@ import { Contract } from "ethers";
 import ERC20 from "../../../abis/erc20.json";
 import { Web3Provider } from "@ethersproject/providers";
 import { isNormalObject } from "../../common/isNormalObject.js";
+import { getUuid } from "../../common/getUuid.js";
+import { logItem } from "../../../index.js";
 
 const interactContractEvm = async (
   key: string,
   path: string,
   context: Record<string, any>,
   provider: any,
-  account: string
+  account: string,
+  logs: logItem[]
 ) => {
   const pathValue = getValueByPath(context, path);
   if (pathValue) {
@@ -63,6 +66,13 @@ const interactContractEvm = async (
           }
         }
       }
+      logs.push({
+        type: "action",
+        timeStamp: Date.now(),
+        runId: getUuid(),
+        code: action,
+        message: JSON.stringify(action, null, 2),
+      });
     }
   }
 };
