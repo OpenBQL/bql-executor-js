@@ -100,7 +100,7 @@ export class Executor {
 
       if (continuousExecution) {
         step += 1;
-        this.run(step);
+        await this.run(step);
       }
     } catch (error: any) {
       this.logs.push({
