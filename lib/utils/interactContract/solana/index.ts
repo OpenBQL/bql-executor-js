@@ -188,6 +188,10 @@ const interactContractSolana = async (
           .rpc();
       }
     }
+    await connection.confirmTransaction(res, "finalized");
+    action.txid = res;
+    action.status = "completed";
+    console.log(action);
   }
 };
 
