@@ -41,7 +41,7 @@ const interactContractEvm = async (
         if (hasValue) params.push({ value: action.value });
         res = await contractObj?.[action.call]?.(...params);
       }
-      console.log(res);
+
       if (res?.hash) {
         const receipt = await library.waitForTransaction(res.hash);
         action.txid = res.hash;
