@@ -76,6 +76,7 @@ export class Executor {
         functionParser(key, path, this.context);
       }
 
+      // interact contract
       if (key === "action") {
         if (this.context.network === "solana") {
           await interactContractSolana(
