@@ -104,6 +104,7 @@ export class Executor {
         await this.run(step);
       }
     } catch (error: any) {
+      console.log("error");
       this.logs.push({
         type: "error",
         timeStamp: Date.now(),
@@ -112,7 +113,7 @@ export class Executor {
         message: error?.data?.message || error?.message || error,
       });
       // throw the bottom-level message
-      throw error?.data?.message || error?.message || error;
+      throw new Error(error?.data?.message || error?.message || error);
     }
   }
 }
