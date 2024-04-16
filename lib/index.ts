@@ -32,14 +32,14 @@ export class Executor {
   constructor(bql: string, provider: any, account: string, solanaRpc?: string) {
     this.bql = bql;
     const bqlObj = yaml.load(bql);
-    const wrapObj = { ...bqlObj, ...publicVariable, ADDRESS: account };
+    const wrapObj = { ADDRESS: account, ...publicVariable, ...bqlObj };
     this.context = wrapObj;
     this.provider = provider;
     this.account = account;
     this.solanaRpc = solanaRpc || "";
     this.executeList = transferObjToList(this.context);
   }
-  run(step = 0, continuousExecution = true) {
+  async run(step = 0, continuousExecution = true) {
     try {
       if (step >= this.executeList.length) {
         this.logs.push({
@@ -78,7 +78,7 @@ export class Executor {
 
       if (key === "action") {
         if (this.context.network === "solana") {
-          interactContractSolana(
+          await interactContractSolana(
             key,
             path,
             this.context,
@@ -87,7 +87,7 @@ export class Executor {
             this.logs
           );
         } else {
-          interactContractEvm(
+          await interactContractEvm(
             key,
             path,
             this.context,
