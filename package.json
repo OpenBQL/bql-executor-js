@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "up": "npm version patch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/OpenBQL/bql-executor-js#readme",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.4.4"
   },
   "dependencies": {
