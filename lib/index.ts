@@ -5,7 +5,7 @@ import {
   functionParser,
   getUuid,
 } from "./utils/common";
-import { ListItem } from "./utils/common/transferObjToList.js";
+import { ListItem } from "./utils/common/transferObjToList";
 import {
   interactContractEvm,
   interactContractSolana,
@@ -62,6 +62,7 @@ export class Executor {
           message: "Workflow start running.",
         });
       }
+      console.log(step);
 
       this.currentStep = step;
 
