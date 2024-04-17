@@ -10,7 +10,7 @@ import {
   interactContractEvm,
   interactContractSolana,
 } from "./utils/interactContract";
-import { publicVariable } from "./config/index.js";
+import { publicVariable } from "./config";
 
 export interface logItem {
   type: "start" | "end" | "action" | "error";

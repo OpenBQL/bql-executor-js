@@ -1,4 +1,4 @@
-import transferObjToList from "../lib/utils/common/transferObjToList";
+import { transferObjToList } from "../lib/utils/common";
 
 describe("transferObjToList", () => {
   test("should return an array of ListItem objects", () => {
