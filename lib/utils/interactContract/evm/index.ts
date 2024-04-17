@@ -2,8 +2,7 @@ import { getValueByPath } from "../../common";
 import { Contract } from "ethers";
 import ERC20 from "../../../abis/erc20.json";
 import { Web3Provider } from "@ethersproject/providers";
-import { isNormalObject } from "../../common/isNormalObject.js";
-import { getUuid } from "../../common/getUuid.js";
+import { isNormalObject, getUuid } from "../../common";
 import { logItem } from "../../../index.js";
 
 const interactContractEvm = async (

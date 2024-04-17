@@ -3,6 +3,7 @@ import {
   replaceVariables,
   transferObjToList,
   functionParser,
+  getUuid,
 } from "./utils/common";
 import { ListItem } from "./utils/common/transferObjToList.js";
 import {
@@ -10,7 +11,6 @@ import {
   interactContractSolana,
 } from "./utils/interactContract";
 import { publicVariable } from "./config/index.js";
-import { getUuid } from "./utils/common/getUuid.js";
 
 export interface logItem {
   type: "start" | "end" | "action" | "error";
@@ -110,6 +110,13 @@ export class Executor {
         runId: getUuid(),
         code: this.executeList[this.currentStep],
         message: error?.data?.message || error?.message || error,
+      });
+      this.logs.push({
+        type: "end",
+        timeStamp: Date.now(),
+        runId: getUuid(),
+        code: this.executeList[this.currentStep],
+        message: "Workflow stop running.",
       });
       // throw the bottom-level message
       throw new Error(error?.data?.message || error?.message || error);

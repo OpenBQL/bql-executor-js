@@ -15,10 +15,8 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import * as anchor from "@project-serum/anchor";
-import { isNormalObject } from "../../common/isNormalObject.js";
-import { getValueByPath } from "../../common";
+import { getValueByPath, isNormalObject, getUuid } from "../../common";
 import { logItem } from "../../../index.js";
-import { getUuid } from "../../common/getUuid.js";
 
 const interactContractSolana = async (
   key: string,
