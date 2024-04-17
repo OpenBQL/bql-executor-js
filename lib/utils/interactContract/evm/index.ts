@@ -3,7 +3,7 @@ import { Contract } from "ethers";
 import ERC20 from "../../../abis/erc20.json";
 import { Web3Provider } from "@ethersproject/providers";
 import { isNormalObject, getUuid } from "../../common";
-import { logItem } from "../../../index.js";
+import { logItem } from "../../..";
 
 const interactContractEvm = async (
   key: string,

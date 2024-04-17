@@ -16,7 +16,7 @@ import {
 } from "@solana/spl-token";
 import * as anchor from "@project-serum/anchor";
 import { getValueByPath, isNormalObject, getUuid } from "../../common";
-import { logItem } from "../../../index.js";
+import { logItem } from "../../..";
 
 const interactContractSolana = async (
   key: string,
