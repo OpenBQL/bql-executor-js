@@ -51,7 +51,6 @@ export class Executor {
         });
         return;
       }
-      console.log(step);
       const notStart =
         this.logs.find((item) => item.type === "start") === undefined;
       if (notStart) {
