@@ -120,7 +120,7 @@ export class Executor {
         message: "Workflow stop running.",
       });
       // throw the bottom-level message
-      throw new Error(error?.data?.message || error?.message || error);
+      // throw new Error(error?.data?.message || error?.message || error);
     }
   }
 }
