@@ -119,6 +119,7 @@ export class Executor {
         code: this.executeList[this.currentStep],
         message: "Workflow stop running.",
       });
+      return;
       // throw the bottom-level message
       // throw new Error(error?.data?.message || error?.message || error);
     }
