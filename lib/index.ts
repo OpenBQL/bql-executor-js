@@ -104,6 +104,7 @@ export class Executor {
         await this.run(step);
       }
     } catch (error: any) {
+      console.log("xxxx");
       this.logs.push({
         type: "error",
         timeStamp: Date.now(),
