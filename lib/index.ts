@@ -104,24 +104,28 @@ export class Executor {
         await this.run(step);
       }
     } catch (error: any) {
-      console.log("xxxx");
-      this.logs.push({
-        type: "error",
-        timeStamp: Date.now(),
-        runId: getUuid(),
-        code: this.executeList[this.currentStep],
-        message: error?.data?.message || error?.message || error,
-      });
-      this.logs.push({
-        type: "end",
-        timeStamp: Date.now(),
-        runId: getUuid(),
-        code: this.executeList[this.currentStep],
-        message: "Workflow stop running.",
-      });
-      return;
+      const notError =
+        this.logs.find((item) => item.type === "error") === undefined;
+      notError &&
+        this.logs.push({
+          type: "error",
+          timeStamp: Date.now(),
+          runId: getUuid(),
+          code: this.executeList[this.currentStep],
+          message: error?.data?.message || error?.message || error,
+        });
+      const notEnd =
+        this.logs.find((item) => item.type === "end") === undefined;
+      notEnd &&
+        this.logs.push({
+          type: "end",
+          timeStamp: Date.now(),
+          runId: getUuid(),
+          code: this.executeList[this.currentStep],
+          message: "Workflow stop running.",
+        });
       // throw the bottom-level message
-      // throw new Error(error?.data?.message || error?.message || error);
+      throw new Error(error?.data?.message || error?.message || error);
     }
   }
 }
