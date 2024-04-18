@@ -62,7 +62,6 @@ export class Executor {
           message: "Workflow start running.",
         });
       }
-      console.log(step);
 
       this.currentStep = step;
 
