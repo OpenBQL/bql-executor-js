@@ -1,6 +1,6 @@
-import funcs from "../operationFuncs/index.js";
-import getParentValueAndKeyByPath from "./getParentValueAndKeyByPath.js";
-import getValueByPath from "./getValueByPath.js";
+import funcs from "../operationFuncs";
+import getParentValueAndKeyByPath from "./getParentValueAndKeyByPath";
+import getValueByPath from "./getValueByPath";
 const functionParser = (
   key: string,
   path: string,

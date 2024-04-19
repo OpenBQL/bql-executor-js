@@ -15,22 +15,25 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import * as anchor from "@project-serum/anchor";
-import { getValueByPath, isNormalObject, getUuid } from "../../common";
+import { getValueByPath, isNormalObject } from "../../common";
 import { logItem } from "../../..";
+import { validateFuncAndParams } from "./validateFuncAndParams";
 
 const interactContractSolana = async (
   key: string,
   path: string,
   context: Record<string, any>,
+  abiOrIdl: Record<string, any[] | Record<string, any>>,
   provider: any,
   solanaRpc: string,
-  logs: logItem[]
+  logs: logItem[],
+  uuid: string
 ) => {
   const pathValue = getValueByPath(context, path);
   if (pathValue) {
     const action = pathValue[key];
+
     const connection = new Connection(solanaRpc);
-    const idl: any = "";
     let res;
     if (action.protocol === "NativeToken") {
       // transfer SOL Token
@@ -121,6 +124,17 @@ const interactContractSolana = async (
       const resObj = await provider.signAndSendTransaction(transaction);
       res = resObj.signature;
     } else {
+      const isEmpty =
+        Object.entries(abiOrIdl).length === 0 &&
+        abiOrIdl.constructor === Object;
+      let idl: any = isEmpty ? null : abiOrIdl[action.contract] || null;
+      if (!idl) {
+        idl = abiOrIdl[action.contract];
+        const validateRes = validateFuncAndParams(idl, action);
+        if (validateRes) {
+          throw new Error(validateRes);
+        }
+      }
       // contract call
       const solanaProvider = new anchor.AnchorProvider(
         connection,
@@ -195,7 +209,7 @@ const interactContractSolana = async (
     logs.push({
       type: "action",
       timeStamp: Date.now(),
-      runId: getUuid(),
+      runId: uuid,
       code: action,
       message: JSON.stringify(action, null, 2),
     });

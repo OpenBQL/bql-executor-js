@@ -2,16 +2,19 @@ import { getValueByPath } from "../../common";
 import { Contract } from "ethers";
 import ERC20 from "../../../abis/erc20.json";
 import { Web3Provider } from "@ethersproject/providers";
-import { isNormalObject, getUuid } from "../../common";
+import { isNormalObject } from "../../common";
 import { logItem } from "../../..";
+import { validateFuncAndParams } from "./validateFuncAndParams";
 
 const interactContractEvm = async (
   key: string,
   path: string,
   context: Record<string, any>,
+  abiOrIdl: Record<string, any[] | Record<string, any>>,
   provider: any,
   account: string,
-  logs: logItem[]
+  logs: logItem[],
+  uuid: string
 ) => {
   const pathValue = getValueByPath(context, path);
   if (pathValue) {
@@ -23,13 +26,23 @@ const interactContractEvm = async (
       // native coin transfer
       res = await signer?.["sendTransaction"]?.(action.params);
     } else {
+      const isEmpty =
+        Object.entries(abiOrIdl).length === 0 &&
+        abiOrIdl.constructor === Object;
+      let abi: any = isEmpty ? null : abiOrIdl[action.contract] || null;
+      if (abi) {
+        const validateRes = validateFuncAndParams(abi, action);
+        if (validateRes) {
+          throw new Error(validateRes);
+        }
+      }
       // contract call
-      const contractObj = new Contract(action.contract, ERC20, signer);
+      const contractObj = new Contract(action.contract, abi, signer);
       const hasValue =
         action.value && !isNaN(action.value) && action.value !== "0";
       if (action.params) {
         const hasSameNameFunc =
-          ERC20.filter((item) => item.name === action.call).length > 1;
+          abi.filter((item: any) => item.name === action.call).length > 1;
 
         const funcName = hasSameNameFunc
           ? `${action.call}(${Object.keys(action.params).join(",")})`
@@ -68,7 +81,7 @@ const interactContractEvm = async (
       logs.push({
         type: "action",
         timeStamp: Date.now(),
-        runId: getUuid(),
+        runId: uuid,
         code: action,
         message: JSON.stringify(action, null, 2),
       });
