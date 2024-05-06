@@ -1,4 +1,4 @@
-import interactContractEvm from "./evm";
-import interactContractSolana from "./solana";
+import interactContractEvm from "./evm/index.js";
+import interactContractSolana from "./solana/index.js";
 
 export { interactContractEvm, interactContractSolana };

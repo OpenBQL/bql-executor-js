@@ -1,4 +1,4 @@
-import { isNormalObject } from "../../common";
+import { isNormalObject } from "../../common/index.js";
 
 export const validateFuncAndParams = (idl: any, action: any) => {
   const error = "";

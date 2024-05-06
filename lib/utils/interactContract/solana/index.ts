@@ -15,30 +15,25 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import * as anchor from "@project-serum/anchor";
-import { getValueByPath, isNormalObject } from "../../common";
-import { logItem } from "../../..";
-import { validateFuncAndParams } from "./validateFuncAndParams";
+import { isNormalObject } from "../../common/index.js";
+import { logItem } from "../../../index.js";
+import { validateFuncAndParams } from "./validateFuncAndParams.js";
 
 const interactContractSolana = async (
-  key: string,
-  path: string,
-  context: Record<string, any>,
+  action: any,
   abiOrIdl: Record<string, any[] | Record<string, any>>,
   provider: any,
   solanaRpc: string,
-  logs: logItem[],
+  logs: any,
   uuid: string
 ) => {
-  const pathValue = getValueByPath(context, path);
-  if (pathValue) {
-    const action = pathValue[key];
-
+  if (action) {
     const connection = new Connection(solanaRpc);
     let res;
     if (action.protocol === "NativeToken") {
       // transfer SOL Token
-      const fromPublicKey = new PublicKey(action?.params?.from || "");
-      const toPublicKey = new PublicKey(action?.params?.to || "");
+      const fromPublicKey = action?.params?.from;
+      const toPublicKey = action?.params?.to;
       const transaction = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: fromPublicKey,
@@ -54,8 +49,8 @@ const interactContractSolana = async (
       res = resObj.signature;
     } else if (action.protocol === "SPL") {
       // transfer SPL Token
-      const fromPublicKey = new PublicKey(action?.params?.from || "");
-      const toPublicKey = new PublicKey(action?.params?.to || "");
+      const fromPublicKey = action?.params?.from;
+      const toPublicKey = action?.params?.to;
       const contractPublicKey = new PublicKey(action.contract);
       const sourceAccount = await getOrCreateAssociatedTokenAccount(
         connection,
@@ -153,44 +148,7 @@ const interactContractSolana = async (
           delete params[key];
         }
       }
-      const instructions = idl.instructions;
-      const funObj = instructions.find(
-        (item: any) => item.name === action.call
-      );
-      let fields = [];
-      if (funObj.args?.length) {
-        if (funObj.args[0]?.type?.defined) {
-          const typeDefined = funObj.args[0]?.type?.defined;
-          const funcArg = idl.types.find(
-            (item: any) => item.name === typeDefined
-          );
-          fields = funcArg?.type?.fields;
-        } else {
-          fields = funObj.args;
-        }
-      }
-      for (const [key, value] of Object.entries(params)) {
-        const currObj = fields.find((item: any) => item.name === key);
-        if (
-          currObj.type === "publicKey" ||
-          currObj.type?.option === "publicKey"
-        ) {
-          params[key] = new PublicKey(value as any);
-        }
-        if (
-          currObj.type?.includes("u") ||
-          currObj.type?.option?.includes("u")
-        ) {
-          params[key] = new anchor.BN(value as any);
-        }
-      }
       const accounts = action.accounts;
-      if (accounts && isNormalObject(accounts)) {
-        for (const [key, value] of Object.entries(accounts)) {
-          accounts[key] = value ? new PublicKey(value) : value;
-        }
-      }
-
       if (params && Object.keys(params).length) {
         const isAccounts = accounts && isNormalObject(accounts);
         res = await program.methods?.[action.call]?.(params)
@@ -206,13 +164,14 @@ const interactContractSolana = async (
     await connection.confirmTransaction(res, "finalized");
     action.txid = res;
     action.status = "completed";
-    logs.push({
+    const actionLog: logItem = {
       type: "action",
       timeStamp: Date.now(),
       runId: uuid,
       code: action,
       message: JSON.stringify(action, null, 2),
-    });
+    };
+    logs && logs((state: any) => [...state, actionLog]);
   }
 };
 

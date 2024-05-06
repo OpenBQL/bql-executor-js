@@ -1,8 +1,2 @@
 # dependencies
 /node_modules
-
-# lib
-/lib
-
-# tests
-/tests

@@ -23,7 +23,7 @@ const transferObjToList = (
           list.push({
             key: index,
             value: item,
-            path: `${prefix}${prefix ? "." : ""}${key}.${index}`,
+            path: `${prefix}${prefix ? "." : ""}${key}`,
           });
         }
       });

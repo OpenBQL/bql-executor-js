@@ -1,10 +1,12 @@
-import getValueByPath from "./getValueByPath";
-import replaceVariables from "./replaceVariables";
-import transferObjToList from "./transferObjToList";
-import functionParser from "./functionParser";
-import isNormalObject from "./isNormalObject";
-import getParentValueAndKeyByPath from "./getParentValueAndKeyByPath";
-import getUuid from "./getUuid";
+import getValueByPath from "./getValueByPath.js";
+import replaceVariables from "./replaceVariables.js";
+import transferObjToList from "./transferObjToList.js";
+import functionParser from "./functionParser.js";
+import isNormalObject from "./isNormalObject.js";
+import getParentValueAndKeyByPath from "./getParentValueAndKeyByPath.js";
+import getUuid from "./getUuid.js";
+import delay from "./delay.js";
+import validateParams from "./validateParams.js";
 
 export {
   getValueByPath,
@@ -14,4 +16,6 @@ export {
   isNormalObject,
   getParentValueAndKeyByPath,
   getUuid,
+  delay,
+  validateParams,
 };

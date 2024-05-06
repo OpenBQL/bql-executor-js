@@ -60,12 +60,12 @@ describe("transferObjToList", () => {
       {
         key: 0,
         value: 1,
-        path: "workflow.0.action.params.value._add.0",
+        path: "workflow.0.action.params.value._add",
       },
       {
         key: 1,
         value: 2,
-        path: "workflow.0.action.params.value._add.1",
+        path: "workflow.0.action.params.value._add",
       },
       {
         key: "_add",

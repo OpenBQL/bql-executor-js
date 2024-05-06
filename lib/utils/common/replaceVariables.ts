@@ -1,4 +1,4 @@
-import getValueByPath from "./getValueByPath";
+import getValueByPath from "./getValueByPath.js";
 
 const replaceVariables = (
   key: string | number,
